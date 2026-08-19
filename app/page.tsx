@@ -30,6 +30,15 @@ export default function WelcomePage() {
               boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
             }}
           >
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <img src="/sonymusic.png" alt="Sony Music" style={{ height: 46, objectFit: 'contain' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1 }}>
+                  <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: 1.5, color: '#111827' }}>SONY MUSIC</span>
+                  <span style={{ fontSize: 12, color: '#6b7280', marginTop: 6 }}>LATIN</span>
+                </div>
+              </div>
+            </div>
             <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 16, color: "#16a34a" }}>Welcome!</h1>
             <p style={{ lineHeight: 1.6, margin: "0 0 8px 0", color: "#1a1a2e" }}>
               To the <strong style={{ color: "#dc2626" }}>Sony Music M&amp;A Catalogue Valuation Platform</strong>.
