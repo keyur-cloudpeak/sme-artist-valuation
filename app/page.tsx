@@ -21,6 +21,15 @@ export default function WelcomePage() {
         fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif",
       }}
     >
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: -43, marginTop: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, textAlign: 'center', transform: 'translateY(-12px)' }}>
+                <img src="/sonymusic.png" alt="Sony Music" style={{ height: 36, width: 36, objectFit: 'contain', display: 'block' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1 }}>
+                  <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: 1.6, color: '#0f172a' }}>SONY MUSIC</span>
+                  <span style={{ fontSize: 11, color: '#6b7280', marginTop: 2 }}>LATIN</span>
+                </div>
+              </div>
+            </div>
       <div style={{ maxWidth: 640, margin: "0 auto", padding: "40px 20px" }}>
           <div
             style={{
@@ -30,15 +39,7 @@ export default function WelcomePage() {
               boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <img src="/sonymusic.png" alt="Sony Music" style={{ height: 46, objectFit: 'contain' }} />
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1 }}>
-                  <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: 1.5, color: '#111827' }}>SONY MUSIC</span>
-                  <span style={{ fontSize: 12, color: '#6b7280', marginTop: 6 }}>LATIN</span>
-                </div>
-              </div>
-            </div>
+            
             <h1 style={{ fontSize: 28, fontWeight: 800, marginBottom: 16, color: "#16a34a" }}>Welcome!</h1>
             <p style={{ lineHeight: 1.6, margin: "0 0 8px 0", color: "#1a1a2e" }}>
               To the <strong style={{ color: "#dc2626" }}>Sony Music M&amp;A Catalogue Valuation Platform</strong>.
