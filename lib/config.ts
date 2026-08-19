@@ -18,10 +18,10 @@ export const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 export const STEP_LABELS = [
   "Catalog select",
   "Resolve ambiguity",
-  "Metadata to Big USD",
+  "Metadata to include",
   "Territory map",
   "Catalog analytics",
-  "Revenue A",
+  "Revenue & PPD",
   "Album analytics",
-  "Composite score",
+  "Corporate export",
 ];

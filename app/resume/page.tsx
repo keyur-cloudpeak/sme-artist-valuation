@@ -41,7 +41,16 @@ export default function ResumePage() {
 
   return (
     <div style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
-      <div style={{ background: "#ffffff", borderRadius: 24, padding: "60px 56px 56px", width: "100%", maxWidth: 640, boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6" }}>
+      <div style={{ background: "#ffffff", borderRadius: 24, padding: "60px 56px 56px", width: "100%", maxWidth: 1020, boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6" }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <img src="/sonymusic.png" alt="Sony Music" style={{ height: 42, objectFit: 'contain' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1 }}>
+              <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: 1.5, color: '#111827' }}>SONY MUSIC</span>
+              <span style={{ fontSize: 12, color: '#6b7280', marginTop: 6 }}>LATIN</span>
+            </div>
+          </div>
+        </div>
         <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
         <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 36, textAlign: "center" }}>Pick up where you left off or start fresh</div>
 
@@ -65,9 +74,6 @@ export default function ResumePage() {
                 {p.inner}
               </span>
             ))}
-          </div>
-          <div style={{ margin: "0 10px 10px", height: 8, background: "#e5e7eb", borderRadius: 4, position: "relative" }}>
-            <div style={{ height: "100%", width: `${progressPct}%`, background: "linear-gradient(90deg, #4f7cf7 0%, #3b5de7 100%)", borderRadius: 4 }} />
           </div>
         </div>
 

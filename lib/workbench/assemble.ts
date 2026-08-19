@@ -42,8 +42,10 @@ export function assembleWorkbenchHtml(params: AssembleParams): string {
     `window.__INITIAL_STEP__ = ${currentStep};`,
     `window.__CATALOG_CREATED__ = ${catalogCreated ? "true" : "false"};`,
     `window.__USER_EMAIL__ = ${JSON.stringify(userEmail)};`,
-    `window.__SESSION_ID__ = ${JSON.stringify(sessionId)};`,
-    `window.__STEP_DATA__ = ${JSON.stringify(stepData || {})};`,
+      `window.__SESSION_ID__ = ${JSON.stringify(sessionId)};`,
+      `window.__STEP_DATA__ = ${JSON.stringify(stepData || {})};`,
+      // client helper to persist checkpoints without a full navigation
+      `window.__saveCheckpoint = function(step, stepData) { try { return fetch('/api/session/checkpoint', { method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin', body: JSON.stringify({ step: step, stepData: stepData }) }).catch(function(){return null;}); } catch(e) { return null; } };`,
     "</script>",
     // CSS (already wrapped in <style>...</style>)
     readPartial("styles.html"),

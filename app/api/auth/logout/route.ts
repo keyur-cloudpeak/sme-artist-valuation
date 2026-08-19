@@ -8,19 +8,8 @@ async function doLogout(req: NextRequest) {
   const store = req.cookies;
   const email = store.get("wb_email")?.value || "";
 
-  try {
-    await withConnection(async (run) => {
-      if (email) {
-        try {
-          await abandonOpenSessions(run, email);
-        } catch {
-          // best-effort
-        }
-      }
-    });
-  } catch {
-    // ignore DB errors and continue to clear cookies
-  }
+  // Do NOT update session status on logout (previously set to COMPLETED).
+  // Only clear client cookies so the user is logged out in the browser.
 
   const res = NextResponse.redirect(new URL("/", req.url), 303);
   res.cookies.delete("wb_email");
