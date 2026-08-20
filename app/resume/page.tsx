@@ -21,6 +21,19 @@ export default function ResumePage() {
       <style dangerouslySetInnerHTML={{ __html: `
         .resume-page { overflow-x: hidden; }
         .resume-page > div { box-sizing: border-box; max-width: 1400px !important; }
+        .resume-topbar { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 0 18px; border-bottom: 1.5px solid #141210; }
+        .resume-brand { display: flex; align-items: center; gap: 14px; flex: 0 0 220px; }
+        .resume-brand-text { line-height: 1.2; display: flex; flex-direction: column; }
+        .resume-brand-name { font-size: 13px; font-weight: 600; letter-spacing: 2.8px; color: #141210; padding-bottom: 5px; border-bottom: 1px solid #c9c5bb; margin-bottom: 4px; }
+        .resume-brand-sub { font-size: 11px; font-weight: 600; letter-spacing: 2.8px; color: #141210; }
+        .resume-topbar-center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex: 1; margin: 0 20px; }
+        .resume-topbar-title { font-weight: 800; font-size: 30px; line-height: 1.1; color: #c51616; }
+        .resume-topbar-desc { color: #5a564c; font-size: 14px; line-height: 1.4; max-width: 925px; }
+        .resume-topbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 14px; flex: 0 0 220px; }
+        .resume-theme { display: flex; align-items: center; gap: 10px; color: #5a564c; font-size: 10px; letter-spacing: .08em; }
+        .resume-theme-track { width: 43px; height: 24px; padding: 3px; border: 1px solid #bdb9af; border-radius: 20px; background: #dad7cc; }
+        .resume-theme-thumb { display: block; width: 16px; height: 16px; margin-left: 17px; border-radius: 50%; background: #e1261c; }
+        .resume-logout { height: 38px; padding: 0 22px; border: 1px solid #d0ccc3; border-radius: 10px; background: #fff; color: #141210; font-size: 13px; font-weight: 700; cursor: pointer; }
         .resume-panel { box-sizing: border-box; width: 100% !important; max-width: 1400px; }
         .resume-session-card, .resume-session-card * { box-sizing: border-box; }
         @media (max-width: 1100px) and (min-width: 701px) {
@@ -30,6 +43,13 @@ export default function ResumePage() {
         }
         @media (max-width: 700px) {
           .resume-page { align-items: flex-start !important; padding: 20px 12px !important; }
+          .resume-topbar { align-items: flex-start; flex-wrap: wrap; gap: 18px; padding-bottom: 14px; }
+          .resume-brand { flex-basis: auto; }
+          .resume-topbar-center { order: 3; flex-basis: 100%; margin: 0; }
+          .resume-topbar-title { font-size: 22px; }
+          .resume-topbar-desc { font-size: 12px; }
+          .resume-topbar-actions { flex-basis: auto; margin-left: auto; }
+          .resume-theme { display: none; }
           .resume-panel { width: 100% !important; padding: 34px 14px 24px !important; border-radius: 16px !important; }
           .resume-panel h2 { font-size: 26px !important; }
           .resume-session-list { max-height: 360px !important; overflow-y: auto !important; padding-right: 2px !important; }
@@ -45,17 +65,29 @@ export default function ResumePage() {
       ` }} />
       <div className="resume-page" style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
       <div style={{ width: "100%", maxWidth: 1020, display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div style={{ marginTop: 8, marginBottom: 6, textAlign: "center", transform: 'translateY(-12px)' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-            <img src="/sonymusic.png" alt="Sony Music" style={{ height: 36, width: 36, objectFit: "contain" }} />
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1 }}>
-              <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: 1.6, color: '#0f172a' }}>SONY MUSIC</span>
-              <span style={{ fontSize: 11, color: '#6b7280', marginTop: 2 }}>LATIN</span>
+        <header className="resume-topbar">
+          <div className="resume-brand">
+            <img src="/sonymusic.png" alt="Sony Music" height={42} width={42} style={{ objectFit: "contain" }} />
+            <div className="resume-brand-text">
+              <span className="resume-brand-name">SONY MUSIC</span>
+              <span className="resume-brand-sub">LATIN</span>
             </div>
           </div>
+          <div className="resume-topbar-center">
+            <div className="resume-topbar-title">M&amp;A CATALOG VALUATION PLATFORM</div>
+            <div className="resume-topbar-desc">An intelligent solution that identifies music catalogues, resolves artist and catalogue ambiguities, maps ownership and distribution territories, and generates decision-ready valuation insights.</div>
+          </div>
+          <div className="resume-topbar-actions">
+            <div className="resume-theme" aria-label="Dark theme"><span>DARK</span><span className="resume-theme-track"><span className="resume-theme-thumb" /></span></div>
+            <form action="/api/auth/logout" method="POST">
+              <button className="resume-logout" type="submit">Logout</button>
+            </form>
+          </div>
+        </header>
+        <div style={{ height: 20 }}>
         </div>
 
-        <div className="resume-panel" style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "140%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
+        <div className="resume-panel" style={{ background: "#ffffff66", borderRadius: 23, padding: "60px 56px 56px", width: "140%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
           <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
 
           <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 10, textAlign: "center" }}>
