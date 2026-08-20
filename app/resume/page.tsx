@@ -29,14 +29,15 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "135%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
+        <div style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "140%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
           <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
 
           <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 10, textAlign: "center" }}>
             {sessions.length > 1 ? `You have ${sessions.length} catalogues in progress` : "Pick up where you left off or start fresh"}
           </div>
 
-          {sessions.map((pending: any) => {
+          <div style={sessions.length > 2 ? { maxHeight: 390, overflowY: "auto", paddingRight: 6 } : undefined}>
+            {sessions.map((pending: any) => {
             const currentStep = pending.current_step || MIN_STEP;
             const stepData = pending.step_data || {};
             const artistName = (stepData.searchTerm as string) || "Catalogue";
@@ -49,9 +50,9 @@ export default function ResumePage() {
             });
 
             return (
-              <div key={pending.session_id} style={{ background: "#f9fafb", borderRadius: 23, padding: 5, border: "2px solid #e5e7eb", marginBottom: 4 }}>
+              <div key={pending.session_id} style={{ background: "#f9fafb", borderRadius: 23, padding: 5, border: "2px solid #f0e7e5", marginBottom: 4 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "0px 10px 0px" }}>
-                  <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #4f7cf7 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>{initials}</div>
+                  <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #e56eac 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>{initials}</div>
                   <div>
                     <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
                     <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
@@ -77,7 +78,8 @@ export default function ResumePage() {
                 </div>
               </div>
             );
-          })}
+            })}
+          </div>
 
           <div style={{ marginTop: 30, display: "flex", gap: 16, textAlign: "center" }}>
             {sessions.length ? (
