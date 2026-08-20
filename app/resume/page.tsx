@@ -122,8 +122,12 @@ export default function ResumePage() {
             {sessions.map((pending: any) => {
             const currentStep = pending.current_step || MIN_STEP;
             const stepData = pending.step_data || {};
-            const artistName = (stepData.searchTerm as string) || "Catalogue";
-            const initials = (artistName.split(/\s+/).slice(0, 2).map((word: string) => (word[0] || "").toUpperCase()).join("")) || "CA";
+            const catalogName = (stepData.searchTerm as string) || "Catalogue";
+            const searchMode = stepData.searchMode as string;
+            const displayName = searchMode === "Artist" || searchMode === "Label"
+              ? `${catalogName} (${searchMode})`
+              : catalogName;
+            const initials = (catalogName.split(/\s+/).slice(0, 2).map((word: string) => (word[0] || "").toUpperCase()).join("")) || "CA";
             const isReturning = currentStep > MIN_STEP || Object.keys(stepData).length > 0;
             const updatedAt = pending.updated_at ? new Date(pending.updated_at) : null;
             const updatedLabel = updatedAt && !Number.isNaN(updatedAt.getTime())
@@ -140,7 +144,7 @@ export default function ResumePage() {
                 <div className="resume-session-header" style={{ display: "flex", alignItems: "center", gap: 16, margin: "0px 10px 0px" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #e56eac 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>{initials}</div>
                   <div>
-                    <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
+                    <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{displayName}</div>
                     <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
                     <div className="resume-session-updated">Last updated: {updatedLabel}</div>
                   </div>
