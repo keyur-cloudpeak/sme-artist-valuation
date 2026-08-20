@@ -34,6 +34,12 @@ export default function ResumePage() {
         .resume-theme-track { width: 43px; height: 24px; padding: 3px; border: 1px solid #bdb9af; border-radius: 20px; background: #dad7cc; }
         .resume-theme-thumb { display: block; width: 16px; height: 16px; margin-left: 17px; border-radius: 50%; background: #e1261c; }
         .resume-logout { height: 38px; padding: 0 22px; border: 1px solid #d0ccc3; border-radius: 10px; background: #fff; color: #141210; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .resume-session-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin: 0 10px 10px; flex: 1; }
+        .resume-session-actions form { margin: 0; }
+        .resume-session-actions button { height: 30px; padding: 0 14px; border: none; border-radius: 8px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        .resume-continue { background: #dc2626; }
+        .resume-restart { background: #3b5de7; }
+        .resume-remove { background: #6b7280; }
         .resume-panel { box-sizing: border-box; width: 100% !important; max-width: 1400px; }
         .resume-session-card, .resume-session-card * { box-sizing: border-box; }
         @media (max-width: 1100px) and (min-width: 701px) {
@@ -56,7 +62,9 @@ export default function ResumePage() {
           .resume-session-card { border-radius: 14px !important; padding: 8px !important; }
           .resume-session-header { flex-wrap: wrap !important; gap: 10px !important; margin: 0 4px !important; }
           .resume-session-header form { flex: 1 1 100% !important; width: 100% !important; margin: 0 0 6px !important; }
-          .resume-session-header button { width: 100% !important; height: 40px !important; font-size: 13px !important; }
+          .resume-session-actions { flex: 1 1 100% !important; width: 100% !important; margin: 0 0 6px !important; }
+          .resume-session-actions form { flex: 1; }
+          .resume-session-actions button { width: 100% !important; height: 40px !important; font-size: 13px !important; padding: 0 6px !important; }
           .resume-progress-summary { margin: 8px 4px 10px !important; }
           .resume-progress-pills { margin: 0 4px !important; }
           .resume-actions { margin-top: 20px !important; }
@@ -115,13 +123,23 @@ export default function ResumePage() {
                     <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
                     <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
                   </div>
-                    <form action="/api/auth/resume" method="POST" style={{ margin: "0 10px 10px", flex: 1, display: "flex", justifyContent: "flex-end" }}>
-                      <input type="hidden" name="action" value="continue" />
-                      <input type="hidden" name="session_id" value={pending.session_id} />
-                      <button type="submit" style={{ width: "26%", height: 30, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-                        Continue with {artistName}
-                      </button>
-                    </form>
+                    <div className="resume-session-actions">
+                      <form action="/api/auth/resume" method="POST">
+                        <input type="hidden" name="action" value="continue" />
+                        <input type="hidden" name="session_id" value={pending.session_id} />
+                        <button className="resume-continue" type="submit">Continue</button>
+                      </form>
+                      <form action="/api/auth/resume" method="POST">
+                        <input type="hidden" name="action" value="restart" />
+                        <input type="hidden" name="session_id" value={pending.session_id} />
+                        <button className="resume-restart" type="submit">Restart</button>
+                      </form>
+                      <form action="/api/auth/resume" method="POST">
+                        <input type="hidden" name="action" value="remove" />
+                        <input type="hidden" name="session_id" value={pending.session_id} />
+                        <button className="resume-remove" type="submit">Remove</button>
+                      </form>
+                    </div>
                 </div>
                 <div className="resume-progress-summary" style={{ display: "flex", justifyContent: "space-between", margin: "0 10px 14px", color: "#6b7280", fontSize: 13, fontWeight: 500 }}>
                   <span>Overall progress</span>
