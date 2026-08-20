@@ -3,7 +3,7 @@ import { withConnection } from "@/lib/snowflake";
 import {
   isValidEmail,
   ensureSessionTables,
-  getOpenSession,
+  getOpenSessions,
   createNewSession,
 } from "@/lib/sessionManager";
 
@@ -24,19 +24,15 @@ export async function POST(req: NextRequest) {
       // best effort, mirrors Python
     }
 
-    const openSession = await getOpenSession(run, email);
+    const openSessions = await getOpenSessions(run, email);
     const res = NextResponse.redirect(
-      new URL(openSession ? "/resume" : "/workbench", req.url),
+      new URL(openSessions.length ? "/resume" : "/workbench", req.url),
       303
     );
     res.cookies.set("wb_email", email, COOKIE_OPTS);
 
-    if (openSession) {
-      res.cookies.set(
-        "wb_pending_resume",
-        JSON.stringify(openSession),
-        COOKIE_OPTS
-      );
+    if (openSessions.length) {
+      res.cookies.set("wb_pending_resume", JSON.stringify(openSessions), COOKIE_OPTS);
     } else {
       const newSession = await createNewSession(run, email);
       res.cookies.set("wb_session_id", newSession.session_id, COOKIE_OPTS);

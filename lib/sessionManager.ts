@@ -42,10 +42,10 @@ export interface OpenSession {
   updated_at: string;
 }
 
-export async function getOpenSession(
+export async function getOpenSessions(
   run: (sql: string, binds?: any[]) => Promise<SnowflakeRow[]>,
   email: string
-): Promise<OpenSession | null> {
+): Promise<OpenSession[]> {
   try {
     const safeEmail = esc(email);
     const rows = await run(`SELECT SESSION_ID, CURRENT_STEP,
@@ -53,9 +53,8 @@ export async function getOpenSession(
         FROM ${DB}.SESSION_PROGRESS
         WHERE USER_EMAIL = '${safeEmail}' AND STATUS = 'IN_PROGRESS'
         ORDER BY UPDATED_AT DESC
-        LIMIT 1`);
-    if (rows.length) {
-      const row = rows[0];
+        LIMIT 20`);
+      return rows.map((row) => {
       let stepData: Record<string, any> = {};
       const raw = row["STEP_DATA_STR"];
       if (raw) {
@@ -72,11 +71,19 @@ export async function getOpenSession(
         step_data: stepData,
         updated_at: String(row["UPDATED_AT"]),
       };
-    }
+    });
   } catch {
     // ignore, mirrors Python's best-effort lookup
   }
-  return null;
+  return [];
+}
+
+export async function getOpenSession(
+  run: (sql: string, binds?: any[]) => Promise<SnowflakeRow[]>,
+  email: string
+): Promise<OpenSession | null> {
+  const sessions = await getOpenSessions(run, email);
+  return sessions[0] || null;
 }
 
 export interface NewSession {

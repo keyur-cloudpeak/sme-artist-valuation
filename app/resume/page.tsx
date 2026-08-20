@@ -7,26 +7,8 @@ export default function ResumePage() {
   const pendingRaw = store.get("wb_pending_resume")?.value;
   if (!pendingRaw) redirect("/");
 
-  const pending = JSON.parse(pendingRaw!);
-  const currentStep = pending.current_step || MIN_STEP;
-  const stepData = pending.step_data || {};
-  const artistName = (stepData && stepData.searchTerm) || "Catalogue";
-  const initials = (artistName.split(/\s+/).slice(0, 2).map((w: string) => (w[0] || "").toUpperCase()).join("") ) || "CA";
-  const isReturning = currentStep > MIN_STEP || Object.keys(stepData).length > 0;
-  const hasCatalogue = currentStep > MIN_STEP || !!(stepData.searchTerm && stepData.searchTerm.trim());
-
-  const pills = STEP_LABELS.map((label, i) => {
-    const stepNum = i + 1;
-    let cls = "future";
-    let inner = `${stepNum} · ${label}`;
-    if (stepNum < currentStep) {
-      cls = "completed";
-      inner = `✓ ${inner}`;
-    } else if (stepNum === currentStep) {
-      cls = "current";
-    }
-    return { cls, inner, key: stepNum };
-  });
+  const pendingValue = JSON.parse(pendingRaw!);
+  const sessions = (Array.isArray(pendingValue) ? pendingValue : [pendingValue]).filter(Boolean);
 
   const pillStyle: any = {
     completed: { background: "#16a34a", color: "#fff" },
@@ -47,45 +29,59 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div style={{ background: "#ffffff", borderRadius: 24, padding: "60px 56px 56px", width: "100%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6" }}>
+        <div style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "100%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
           <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
 
-          <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 36, textAlign: "center" }}>Pick up where you left off or start fresh</div>
-
-          <div style={{ background: "#f9fafb", borderRadius: 23, padding: 10, border: "2px solid #e5e7eb" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "10px 10px 24px" }}>
-              <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #4f7cf7 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>
-                {initials}
-              </div>
-              <div>
-                <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
-                <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
-              </div>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "space-between", margin: "0 10px 14px", color: "#6b7280", fontSize: 13, fontWeight: 500 }}>
-              <span>Overall progress</span>
-              <span>{currentStep} of {MAX_STEP} steps</span>
-            </div>
-
-            <div style={{ display: "flex", gap: 8, overflowX: "auto", margin: "0 10px 20px", padding: "4px 0" }}>
-              {pills.map((p) => (
-                <span key={p.key} style={{ ...(pillStyle as any)[p.cls], padding: "8px 16px", borderRadius: 24, fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", flexShrink: 0 }}>
-                  {p.inner}
-                </span>
-              ))}
-            </div>
+          <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 10, textAlign: "center" }}>
+            {sessions.length > 1 ? `You have ${sessions.length} catalogues in progress` : "Pick up where you left off or start fresh"}
           </div>
 
-          <div style={{ marginTop: 30, display: "flex", gap: 16 }}>
-            {hasCatalogue ? (
-              <>
-                <form action="/api/auth/resume" method="POST" style={{ flex: 1 }}>
+          {sessions.map((pending: any) => {
+            const currentStep = pending.current_step || MIN_STEP;
+            const stepData = pending.step_data || {};
+            const artistName = (stepData.searchTerm as string) || "Catalogue";
+            const initials = (artistName.split(/\s+/).slice(0, 2).map((word: string) => (word[0] || "").toUpperCase()).join("")) || "CA";
+            const isReturning = currentStep > MIN_STEP || Object.keys(stepData).length > 0;
+            const pills = STEP_LABELS.map((label, i) => {
+              const stepNum = i + 1;
+              const cls = stepNum < currentStep ? "completed" : stepNum === currentStep ? "current" : "future";
+              return { cls, inner: `${stepNum} · ${label}`, key: stepNum };
+            });
+
+            return (
+              <div key={pending.session_id} style={{ background: "#f9fafb", borderRadius: 23, padding: 5, border: "2px solid #e5e7eb", marginBottom: 4 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "5px 10px 4px" }}>
+                  <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #4f7cf7 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>{initials}</div>
+                  <div>
+                    <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
+                    <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-between", margin: "0 10px 14px", color: "#6b7280", fontSize: 13, fontWeight: 500 }}>
+                  <span>Overall progress</span>
+                  <span>{currentStep} of {MAX_STEP} steps</span>
+                </div>
+                <div style={{ display: "flex", gap: 8, overflowX: "auto", margin: "0 10px 10px", padding: "4px 0" }}>
+                  {pills.map((p) => (
+                    <span key={p.key} style={{ ...(pillStyle as any)[p.cls], padding: "8px 16px", borderRadius: 24, fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", flexShrink: 0 }}>
+                      {p.cls === "completed" ? `✓ ${p.inner}` : p.inner}
+                    </span>
+                  ))}
+                </div>
+                <form action="/api/auth/resume" method="POST" style={{ margin: "0 10px 10px" }}>
                   <input type="hidden" name="action" value="continue" />
-                  <button type="submit" style={{ width: "100%", height: 48, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-                    Continue where you left off
+                  <input type="hidden" name="session_id" value={pending.session_id} />
+                  <button type="submit" style={{ width: "26%", height: 30, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+                    Continue with {artistName}
                   </button>
                 </form>
+              </div>
+            );
+          })}
+
+          <div style={{ marginTop: 30, display: "flex", gap: 16 }}>
+            {sessions.length ? (
+              <>
                 <form action="/api/auth/resume" method="POST" style={{ flex: 1 }}>
                   <input type="hidden" name="action" value="start_new" />
                   <button type="submit" style={{ width: "100%", height: 48, background: "#3b5de7", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
