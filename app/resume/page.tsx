@@ -40,6 +40,7 @@ export default function ResumePage() {
         .resume-continue { background: #dc2626; }
         .resume-restart { background: #3b5de7; }
         .resume-remove { background: #6b7280; }
+        .resume-session-updated { color: #8f8a7e; font-size: 12px; margin-top: 4px; }
         .resume-panel { box-sizing: border-box; width: 100% !important; max-width: 1400px; }
         .resume-session-card, .resume-session-card * { box-sizing: border-box; }
         @media (max-width: 1100px) and (min-width: 701px) {
@@ -109,6 +110,10 @@ export default function ResumePage() {
             const artistName = (stepData.searchTerm as string) || "Catalogue";
             const initials = (artistName.split(/\s+/).slice(0, 2).map((word: string) => (word[0] || "").toUpperCase()).join("")) || "CA";
             const isReturning = currentStep > MIN_STEP || Object.keys(stepData).length > 0;
+            const updatedAt = pending.updated_at ? new Date(pending.updated_at) : null;
+            const updatedLabel = updatedAt && !Number.isNaN(updatedAt.getTime())
+              ? new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short" }).format(updatedAt)
+              : "Date unavailable";
             const pills = STEP_LABELS.map((label, i) => {
               const stepNum = i + 1;
               const cls = stepNum < currentStep ? "completed" : stepNum === currentStep ? "current" : "future";
@@ -122,6 +127,7 @@ export default function ResumePage() {
                   <div>
                     <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
                     <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
+                    <div className="resume-session-updated">Last updated: {updatedLabel}</div>
                   </div>
                     <div className="resume-session-actions">
                       <form action="/api/auth/resume" method="POST">

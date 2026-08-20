@@ -10,6 +10,15 @@ export async function POST(req: NextRequest) {
 
   const store = req.cookies;
   const email = store.get("wb_email")?.value || "";
+  if (action === "move_resume") {
+    const openSessions = await withConnection((run) => getOpenSessions(run, email));
+    const res = NextResponse.redirect(new URL(openSessions.length ? "/resume" : "/workbench", req.url), 303);
+    if (openSessions.length) {
+      res.cookies.set("wb_pending_resume", JSON.stringify(openSessions), COOKIE_OPTS);
+    }
+    return res;
+  }
+
   const pendingRaw = store.get("wb_pending_resume")?.value;
   const pendingValue = pendingRaw ? JSON.parse(pendingRaw) : null;
   const pendingSessions = Array.isArray(pendingValue) ? pendingValue : pendingValue ? [pendingValue] : [];
