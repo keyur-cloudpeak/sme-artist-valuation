@@ -17,7 +17,7 @@ export default function ResumePage() {
   };
 
   return (
-    <div style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
+    <div style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
       <div style={{ width: "100%", maxWidth: 1020, display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ marginTop: 8, marginBottom: 6, textAlign: "center", transform: 'translateY(-12px)' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
@@ -29,7 +29,7 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "100%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
+        <div style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "135%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
           <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
 
           <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 10, textAlign: "center" }}>
@@ -50,41 +50,41 @@ export default function ResumePage() {
 
             return (
               <div key={pending.session_id} style={{ background: "#f9fafb", borderRadius: 23, padding: 5, border: "2px solid #e5e7eb", marginBottom: 4 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "5px 10px 4px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "0px 10px 0px" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #4f7cf7 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>{initials}</div>
                   <div>
                     <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
                     <div style={{ color: "#6b7280", fontSize: 14, marginTop: 3 }}>Catalogue valuation {isReturning ? "in progress" : "ready"}</div>
                   </div>
+                    <form action="/api/auth/resume" method="POST" style={{ margin: "0 10px 10px", flex: 1, display: "flex", justifyContent: "flex-end" }}>
+                      <input type="hidden" name="action" value="continue" />
+                      <input type="hidden" name="session_id" value={pending.session_id} />
+                      <button type="submit" style={{ width: "26%", height: 30, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+                        Continue with {artistName}
+                      </button>
+                    </form>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", margin: "0 10px 14px", color: "#6b7280", fontSize: 13, fontWeight: 500 }}>
                   <span>Overall progress</span>
                   <span>{currentStep} of {MAX_STEP} steps</span>
                 </div>
-                <div style={{ display: "flex", gap: 8, overflowX: "auto", margin: "0 10px 10px", padding: "4px 0" }}>
+                <div style={{ display: "flex", gap: 8, overflowX: "auto", margin: "0 10px 0px", padding: "4px 0" }}>
                   {pills.map((p) => (
                     <span key={p.key} style={{ ...(pillStyle as any)[p.cls], padding: "8px 16px", borderRadius: 24, fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", flexShrink: 0 }}>
                       {p.cls === "completed" ? `✓ ${p.inner}` : p.inner}
                     </span>
                   ))}
                 </div>
-                <form action="/api/auth/resume" method="POST" style={{ margin: "0 10px 10px" }}>
-                  <input type="hidden" name="action" value="continue" />
-                  <input type="hidden" name="session_id" value={pending.session_id} />
-                  <button type="submit" style={{ width: "26%", height: 30, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
-                    Continue with {artistName}
-                  </button>
-                </form>
               </div>
             );
           })}
 
-          <div style={{ marginTop: 30, display: "flex", gap: 16 }}>
+          <div style={{ marginTop: 30, display: "flex", gap: 16, textAlign: "center" }}>
             {sessions.length ? (
               <>
                 <form action="/api/auth/resume" method="POST" style={{ flex: 1 }}>
                   <input type="hidden" name="action" value="start_new" />
-                  <button type="submit" style={{ width: "100%", height: 48, background: "#3b5de7", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+                  <button type="submit" style={{ width: "40%", height: 40, background: "#3b5de7", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
                     Start new
                   </button>
                 </form>
@@ -92,7 +92,7 @@ export default function ResumePage() {
             ) : (
               <form action="/api/auth/resume" method="POST" style={{ flex: 1 }}>
                 <input type="hidden" name="action" value="start_new" />
-                <button type="submit" style={{ width: "100%", height: 48, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
+                <button type="submit" style={{ width: "40%", height: 40, background: "#dc2626", color: "#fff", border: "none", borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: "pointer" }}>
                   Start new
                 </button>
               </form>
