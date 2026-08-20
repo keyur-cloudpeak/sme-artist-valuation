@@ -18,7 +18,7 @@ export default function ResumePage() {
 
   return (
     <>
-      <style>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .resume-page { overflow-x: hidden; }
         .resume-page > div { box-sizing: border-box; max-width: 1400px !important; }
         .resume-panel { box-sizing: border-box; width: 100% !important; max-width: 1400px; }
@@ -42,7 +42,7 @@ export default function ResumePage() {
           .resume-actions { margin-top: 20px !important; }
           .resume-actions button { width: 100% !important; }
         }
-      `}</style>
+      ` }} />
       <div className="resume-page" style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
       <div style={{ width: "100%", maxWidth: 1020, display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ marginTop: 8, marginBottom: 6, textAlign: "center", transform: 'translateY(-12px)' }}>
