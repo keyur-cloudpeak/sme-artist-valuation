@@ -1206,16 +1206,18 @@
     }
 
     .btn.secondary {
-      background: #ef7979;
-      color: #f4f7f7;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
       border: 0.5px solid var(--border-strong);
       box-shadow: none;
+      cursor: pointer;
+      transition: .2s;
     }
 
-    .btn.secondary:hover {
+    /* .btn.secondary:hover {
       border-color: var(--accent);
       color: var(--accent);
-    }
+    } */
 
     .btn:disabled {
       opacity: .35;
