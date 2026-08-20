@@ -33,7 +33,7 @@ export default function ResumePage() {
         .resume-theme { display: flex; align-items: center; gap: 10px; color: #5a564c; font-size: 10px; letter-spacing: .08em; }
         .resume-theme-track { width: 43px; height: 24px; padding: 3px; border: 1px solid #bdb9af; border-radius: 20px; background: #dad7cc; }
         .resume-theme-thumb { display: block; width: 16px; height: 16px; margin-left: 17px; border-radius: 50%; background: #e1261c; }
-        .resume-logout { height: 38px; padding: 0 22px; border: 1px solid #d0ccc3; border-radius: 10px; background: #fff; color: #141210; font-size: 13px; font-weight: 700; cursor: pointer; }
+        .resume-logout { height: 38px; padding: 0 22px; border: 1px solid #d0ccc3; border-radius: 10px; background: #e70b0b; color: #fdfcfb; font-size: 13px; font-weight: 700; cursor: pointer; }
         .resume-session-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin: 0 10px 10px; flex: 1; }
         .resume-session-actions form { margin: 0; }
         .resume-session-actions button { height: 30px; padding: 0 14px; border: none; border-radius: 8px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
@@ -97,7 +97,7 @@ export default function ResumePage() {
         </div>
 
         <div className="resume-panel" style={{ background: "#ffffff66", borderRadius: 23, padding: "60px 56px 56px", width: "140%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
-          <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
+          <h2 style={{ color: "#1b5a02", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
 
           <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 10, textAlign: "center" }}>
             {sessions.length > 1 ? `You have ${sessions.length} catalogues in progress` : "Pick up where you left off or start fresh"}
