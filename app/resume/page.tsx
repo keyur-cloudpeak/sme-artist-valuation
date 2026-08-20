@@ -17,7 +17,33 @@ export default function ResumePage() {
   };
 
   return (
-    <div style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
+    <>
+      <style>{`
+        .resume-page { overflow-x: hidden; }
+        .resume-page > div { box-sizing: border-box; max-width: 1400px !important; }
+        .resume-panel { box-sizing: border-box; width: 100% !important; max-width: 1400px; }
+        .resume-session-card, .resume-session-card * { box-sizing: border-box; }
+        @media (max-width: 1100px) and (min-width: 701px) {
+          .resume-page { padding: 24px 16px !important; }
+          .resume-panel { padding: 44px 32px 36px !important; }
+          .resume-session-header button { width: 34% !important; }
+        }
+        @media (max-width: 700px) {
+          .resume-page { align-items: flex-start !important; padding: 20px 12px !important; }
+          .resume-panel { width: 100% !important; padding: 34px 14px 24px !important; border-radius: 16px !important; }
+          .resume-panel h2 { font-size: 26px !important; }
+          .resume-session-list { max-height: 360px !important; overflow-y: auto !important; padding-right: 2px !important; }
+          .resume-session-card { border-radius: 14px !important; padding: 8px !important; }
+          .resume-session-header { flex-wrap: wrap !important; gap: 10px !important; margin: 0 4px !important; }
+          .resume-session-header form { flex: 1 1 100% !important; width: 100% !important; margin: 0 0 6px !important; }
+          .resume-session-header button { width: 100% !important; height: 40px !important; font-size: 13px !important; }
+          .resume-progress-summary { margin: 8px 4px 10px !important; }
+          .resume-progress-pills { margin: 0 4px !important; }
+          .resume-actions { margin-top: 20px !important; }
+          .resume-actions button { width: 100% !important; }
+        }
+      `}</style>
+      <div className="resume-page" style={{ background: "#F1EFE7", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0px 20px", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif" }}>
       <div style={{ width: "100%", maxWidth: 1020, display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ marginTop: 8, marginBottom: 6, textAlign: "center", transform: 'translateY(-12px)' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
@@ -29,14 +55,14 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "140%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
+        <div className="resume-panel" style={{ background: "#ffffff", borderRadius: 23, padding: "60px 56px 56px", width: "140%", boxShadow: "0 8px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)", border: "1px solid #eef1f6", marginBottom: 4 }}>
           <h2 style={{ color: "#111827", fontSize: 32, fontWeight: 800, margin: "0 0 10px 0", textAlign: "center" }}>Welcome back!</h2>
 
           <div style={{ color: "#6b7280", fontSize: 16, marginBottom: 10, textAlign: "center" }}>
             {sessions.length > 1 ? `You have ${sessions.length} catalogues in progress` : "Pick up where you left off or start fresh"}
           </div>
 
-          <div style={sessions.length > 2 ? { maxHeight: 390, overflowY: "auto", paddingRight: 6 } : undefined}>
+          <div className="resume-session-list" style={sessions.length > 2 ? { maxHeight: 390, overflowY: "auto", paddingRight: 6 } : undefined}>
             {sessions.map((pending: any) => {
             const currentStep = pending.current_step || MIN_STEP;
             const stepData = pending.step_data || {};
@@ -50,8 +76,8 @@ export default function ResumePage() {
             });
 
             return (
-              <div key={pending.session_id} style={{ background: "#f9fafb", borderRadius: 23, padding: 5, border: "2px solid #f0e7e5", marginBottom: 4 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "0px 10px 0px" }}>
+              <div className="resume-session-card" key={pending.session_id} style={{ background: "#f9fafb", borderRadius: 23, padding: 5, border: "2px solid #f0e7e5", marginBottom: 4 }}>
+                <div className="resume-session-header" style={{ display: "flex", alignItems: "center", gap: 16, margin: "0px 10px 0px" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg, #e56eac 0%, #3b5de7 100%)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700, fontSize: 18, flexShrink: 0 }}>{initials}</div>
                   <div>
                     <div style={{ color: "#111827", fontWeight: 600, fontSize: 18 }}>{artistName}</div>
@@ -65,11 +91,11 @@ export default function ResumePage() {
                       </button>
                     </form>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", margin: "0 10px 14px", color: "#6b7280", fontSize: 13, fontWeight: 500 }}>
+                <div className="resume-progress-summary" style={{ display: "flex", justifyContent: "space-between", margin: "0 10px 14px", color: "#6b7280", fontSize: 13, fontWeight: 500 }}>
                   <span>Overall progress</span>
                   <span>{currentStep} of {MAX_STEP} steps</span>
                 </div>
-                <div style={{ display: "flex", gap: 8, overflowX: "auto", margin: "0 10px 0px", padding: "4px 0" }}>
+                <div className="resume-progress-pills" style={{ display: "flex", gap: 8, overflowX: "auto", margin: "0 10px 0px", padding: "4px 0" }}>
                   {pills.map((p) => (
                     <span key={p.key} style={{ ...(pillStyle as any)[p.cls], padding: "8px 16px", borderRadius: 24, fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", flexShrink: 0 }}>
                       {p.cls === "completed" ? `✓ ${p.inner}` : p.inner}
@@ -81,7 +107,7 @@ export default function ResumePage() {
             })}
           </div>
 
-          <div style={{ marginTop: 30, display: "flex", gap: 16, textAlign: "center" }}>
+          <div className="resume-actions" style={{ marginTop: 30, display: "flex", gap: 16, textAlign: "center" }}>
             {sessions.length ? (
               <>
                 <form action="/api/auth/resume" method="POST" style={{ flex: 1 }}>
@@ -102,6 +128,7 @@ export default function ResumePage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
