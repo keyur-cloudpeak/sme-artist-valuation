@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { MAX_STEP, MIN_STEP, STEP_LABELS } from "@/lib/config";
+import ResumeThemeToggle from "./ResumeThemeToggle";
 
 export default function ResumePage() {
   const store = cookies();
@@ -30,9 +31,23 @@ export default function ResumePage() {
         .resume-topbar-title { font-weight: 800; font-size: 30px; line-height: 1.1; color: #c51616; }
         .resume-topbar-desc { color: #5a564c; font-size: 14px; line-height: 1.4; max-width: 925px; }
         .resume-topbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: 14px; flex: 0 0 220px; }
-        .resume-theme { display: flex; align-items: center; gap: 10px; color: #5a564c; font-size: 10px; letter-spacing: .08em; }
-        .resume-theme-track { width: 43px; height: 24px; padding: 3px; border: 1px solid #bdb9af; border-radius: 20px; background: #dad7cc; }
+        .resume-theme { display: flex; align-items: center; gap: 10px; color: #5a564c; font-size: 10px; letter-spacing: .08em; border: 0; padding: 0; background: transparent; cursor: pointer; }
+        .resume-theme-track { width: 32px; height: 15px; padding: 3px; border: 1px solid #bdb9af; border-radius: 20px; background: #dad7cc; }
         .resume-theme-thumb { display: block; width: 16px; height: 16px; margin-left: 17px; border-radius: 50%; background: #e1261c; }
+        .resume-theme.is-dark .resume-theme-track { background: #292524; border-color: #57534e; }
+        .resume-theme.is-dark .resume-theme-thumb { margin-left: 0; background: #f8fafc; }
+        html[data-resume-theme="dark"] .resume-page { background: #171717 !important; color: #f5f5f4; }
+        html[data-resume-theme="dark"] .resume-topbar { border-color: #57534e; }
+        html[data-resume-theme="dark"] .resume-brand-name,
+        html[data-resume-theme="dark"] .resume-brand-sub { color: #f5f5f4; border-color: #57534e; }
+        html[data-resume-theme="dark"] .resume-topbar-desc,
+        html[data-resume-theme="dark"] .resume-theme { color: #d6d3d1; }
+        html[data-resume-theme="dark"] .resume-panel { background: #262626 !important; border-color: #44403c !important; box-shadow: 0 8px 40px rgba(0,0,0,.3) !important; }
+        html[data-resume-theme="dark"] .resume-panel h2 { color: #86efac !important; }
+        html[data-resume-theme="dark"] .resume-session-card { background: #1c1917 !important; border-color: #44403c !important; }
+        html[data-resume-theme="dark"] .resume-session-card div { color: #e7e5e4 !important; }
+        html[data-resume-theme="dark"] .resume-session-card .resume-session-updated { color: #a8a29e !important; }
+        html[data-resume-theme="dark"] .resume-progress-pills span.future { background: #44403c !important; color: #a8a29e !important; }
         .resume-logout { height: 38px; padding: 0 22px; border: 1px solid #d0ccc3; border-radius: 10px; background: #e70b0b; color: #fdfcfb; font-size: 13px; font-weight: 700; cursor: pointer; }
         .resume-session-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin: 0 10px 10px; flex: 1; }
         .resume-session-actions form { margin: 0; }
@@ -87,7 +102,7 @@ export default function ResumePage() {
             <div className="resume-topbar-desc">An intelligent solution that identifies music catalogues, resolves artist and catalogue ambiguities, maps ownership and distribution territories, and generates decision-ready valuation insights.</div>
           </div>
           <div className="resume-topbar-actions">
-            <div className="resume-theme" aria-label="Dark theme"><span>DARK</span><span className="resume-theme-track"><span className="resume-theme-thumb" /></span></div>
+            <ResumeThemeToggle />
             <form action="/api/auth/logout" method="POST">
               <button className="resume-logout" type="submit">Logout</button>
             </form>
